@@ -945,4 +945,10 @@ http://158.160.20.51:30512/d/alertmanager-overview/alertmanager-overview?orgId=1
 
 ### Установка и настройка CI/CD
 
+Для настройки CI/CD в GitHub Action нужно добавить секретки:
 
+- KUBE_CONFIG_DATA
+
+- DOCKERHUB_TOKEN
+
+- DOCKERHUB_USERNAME
