@@ -111,5 +111,5 @@ jobs:
           kubectl apply -f ./app/deploy/deployment.yaml
           kubectl get daemonsets -n monitor
           kubectl get pods -n monitor
-          kubectl describe daemonset myapp -n monitor
-          kubectl describe service myapp-service -n monitor
+          kubectl describe daemonset diplom -n monitor
+          kubectl describe service diplom-nginx -n monitor
