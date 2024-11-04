@@ -955,3 +955,4 @@ http://158.160.20.51:30512/d/alertmanager-overview/alertmanager-overview?orgId=1
 
 Создадим файл ```ci-cd-diplom.yaml```
 
+Тест
