@@ -987,21 +987,15 @@ jobs:
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Extract version from tag or commit message
+      - name: Extract version from commit messages
         run: |
-          echo "GITHUB_REF: ${GITHUB_REF}"
-          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
-            VERSION=${GITHUB_REF#refs/tags/}
+          VERSION=$(git log -1 --pretty=format:%B)
+          if [[ ! -z "$VERSION" ]]; then
+            echo "VERSION=$VERSION" >> $GITHUB_ENV
           else
-            VERSION=$(git log -1 --pretty=format:%B | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+' || echo "")
-          fi
-          if [[ -z "$VERSION" ]]; then
-            echo "No version found in the commit message or tag"
+            echo "No version found in the commit message"
             exit 1
           fi
-          VERSION=${VERSION//[[:space:]]/}  # Remove any spaces
-          echo "Using version: $VERSION"
-          echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
       - name: Build and push
         uses: docker/build-push-action@v5
@@ -1029,21 +1023,15 @@ jobs:
         with:
           version: 'v1.21.0'
 
-      - name: Extract version from tag or commit message
+      - name: Extract version from commit messages
         run: |
-          echo "GITHUB_REF: ${GITHUB_REF}"
-          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
-            VERSION=${GITHUB_REF#refs/tags/}
+          VERSION=$(git log -1 --pretty=format:%B)
+          if [[ ! -z "$VERSION" ]]; then
+            echo "VERSION=$VERSION" >> $GITHUB_ENV
           else
-            VERSION=$(git log -1 --pretty=format:%B | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+' || echo "")
-          fi
-          if [[ -z "$VERSION" ]]; then
-            echo "No version found in the commit message or tag"
+            echo "No version found in the commit message"
             exit 1
           fi
-          VERSION=${VERSION//[[:space:]]/}  # Remove any spaces
-          echo "Using version: $VERSION"
-          echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
       - name: Replace image tag in deployment.yaml
         run: |
@@ -1084,3 +1072,6 @@ jobs:
 
 http://158.160.20.51:31080
 
+Ссылка на Actions: https://github.com/Wanderwille/diplom_project_DEVOPS/actions/workflows/ci-cd-diplom.yml
+
+![Скриншот 1](/img/CI-CD%20Final.png)
