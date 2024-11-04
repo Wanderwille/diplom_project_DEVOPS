@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: diplom
+  namespace: monitor
+  labels:
+    app: diplom
+spec:
+  selector:
+    matchLabels:
+      app: diplom
+  template:
+    metadata:
+      labels:
+        app: diplom
+    spec:
+      containers:
+      - name: diplom
+        image: wanderwille/nginx_diplom:latest
+      restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: diplom-nginx
+  namespace: monitor
+spec:
+  selector:
+    app: diplom
+  type: NodePort
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 31080
