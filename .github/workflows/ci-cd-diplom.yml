@@ -48,7 +48,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile
+          file: ./app/Dockerfile
           push: true
           tags: ${{ env.IMAGE_TAG }}:${{ env.VERSION }}
 
@@ -88,11 +88,11 @@ jobs:
 
       - name: Replace image tag in deployment.yaml
         run: |
-          if [ ! -f ./deploy/deployment.yaml ]; then
+          if [ ! -f ./app/deploy/deployment.yaml ]; then
             echo "deployment.yaml not found in the current directory"
             exit 1
           fi
-          sed -i "s|image: wanderwille/nginx_diplom:.*|image: ${{ env.IMAGE_TAG }}:${{ env.VERSION }}|" ./deploy/deployment.yaml
+          sed -i "s|image: wanderwille/nginx_diplom:.*|image: ${{ env.IMAGE_TAG }}:${{ env.VERSION }}|" ./app/deploy/deployment.yaml
 
       - name: Create kubeconfig
         run: |
